@@ -19,6 +19,7 @@ import QFTFramework
 import GaussianField
 import SmoothCircle
 import HeatKernel
+import Nuclear.Complexification
 
 open GaussianField
 
@@ -44,14 +45,14 @@ on S¹_L with Schwartz functions on ℝ. Field configurations are the weak
 dual (tempered distributions). -/
 def cylinderSpacetime (L : ℝ) [Fact (0 < L)] : SpacetimeData where
   TestFun := CylinderTestFun L
-  TestFunℂ := CylinderTestFun L  -- real space serving as complex placeholder
+  TestFunℂ := Complexification (CylinderTestFun L)
   instACG_TF := inferInstance
   instMod_TF := inferInstance
   instTS_TF := inferInstance
   instACG_TFℂ := inferInstance
-  instMod_TFℂ := sorry  -- Module ℂ structure (future: complexification)
+  instMod_TFℂ := inferInstance
   instTS_TFℂ := inferInstance
-  toComplex := sorry  -- real-to-complex embedding (future)
+  toComplex := sorry  -- CLM version of Complexification.ofReal (needs topology)
   FieldConfig := Configuration (CylinderTestFun L)
   instMS_FC := instMeasurableSpaceConfiguration
   instTS_FC := inferInstance
@@ -91,14 +92,14 @@ on each circle factor. The spacetime is compact, so clustering is vacuous
 and there is no infinite time direction for reflection positivity. -/
 def torusSpacetime (L₁ L₂ : ℝ) [Fact (0 < L₁)] [Fact (0 < L₂)] : SpacetimeData where
   TestFun := TorusTestFun L₁ L₂
-  TestFunℂ := TorusTestFun L₁ L₂  -- real space serving as complex placeholder
+  TestFunℂ := Complexification (TorusTestFun L₁ L₂)
   instACG_TF := inferInstance
   instMod_TF := inferInstance
   instTS_TF := inferInstance
   instACG_TFℂ := inferInstance
-  instMod_TFℂ := sorry  -- Module ℂ structure (future: complexification)
+  instMod_TFℂ := inferInstance
   instTS_TFℂ := inferInstance
-  toComplex := sorry  -- real-to-complex embedding (future)
+  toComplex := sorry  -- CLM version of Complexification.ofReal (needs topology)
   FieldConfig := Configuration (TorusTestFun L₁ L₂)
   instMS_FC := instMeasurableSpaceConfiguration
   instTS_FC := inferInstance
