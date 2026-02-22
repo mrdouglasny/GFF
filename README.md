@@ -21,6 +21,8 @@ The GFF on a spacetime M is the centered Gaussian probability measure on the spa
 
 ## Spacetimes
 
+The three spacetimes below are **implemented examples**, not an exhaustive list. The framework is fully general: any spacetime whose test function space carries a `DyninMityaginSpace` instance can be plugged in. In particular, QFTFramework's `SpacetimeData` is parametric — it accepts any test function type, field configuration space, symmetry group, and time structure. gaussian-field's `GaussianField.measure` works for any CLM `T : E →L[ℝ] H` from any nuclear Frechet space `E`. New spacetimes (e.g. higher tori T^d, half-spaces, lattices) require only providing the appropriate `DyninMityaginSpace` instance and eigenvalue spectrum.
+
 | Spacetime | Test functions | Covariance spectrum | OS axioms |
 |-----------|---------------|-------------------|-----------|
 | Cylinder S^1_L x R | `NuclearTensorProduct (SmoothMap_Circle L R) (SchwartzMap R R)` | (2 pi n/L)^2 + (2k+1) + m^2 | Full `OSTheory` (sorry'd) |
