@@ -11,6 +11,7 @@ QFTData instances using gaussian-field's Gaussian measure.
 
 - `cylinderGFF_T` — covariance CLM for cylinder via spectralCLM
 - `cylinderGFF` — QFTData for free scalar on cylinder
+- `torusGFF` — QFTData for free scalar on T²
 - `euclideanGFF` — QFTData for free scalar on ℝ^d
 -/
 
@@ -46,6 +47,48 @@ def cylinderGFF (L mass : ℝ) [Fact (0 < L)] (hL : 0 < L) (hmass : 0 < mass) :
   weight := fun _ => 1
   weight_integrable := sorry
   genFunℂ := sorry  -- Z[J] = ∫ exp(i⟨ω,J⟩) dμ(ω)
+
+/-! ## Torus GFF
+
+The GFF on the flat torus T² = S¹_{L₁} × S¹_{L₂}. The covariance operator
+is T = (-Δ + m²)^{-1/2} where Δ is the Laplacian on T². The eigenvalues are
+λ_{n₁,n₂} = (2πn₁/L₁)² + (2πn₂/L₂)² + m², all strictly positive for m > 0.
+
+The spectrum is discrete and all eigenvalues are positive, so T maps into ℓ²
+and the Gaussian measure is well-defined. Since T² is compact, the GFF is a
+perfectly regular random field (no UV divergence after smearing). -/
+
+/-- Eigenvalue of -Δ + m² on T² = S¹_{L₁} × S¹_{L₂}.
+Mode m decodes via Cantor pairing to (n₁, n₂) where each indexes
+Fourier modes on the respective circle. -/
+noncomputable def torusEigenvalue (L₁ L₂ mass : ℝ) (m : ℕ) : ℝ :=
+  let nk := m.unpair
+  (2 * Real.pi * nk.1 / L₁) ^ 2 + (2 * Real.pi * nk.2 / L₂) ^ 2 + mass ^ 2
+
+/-- Singular value σ_m = λ_m^{-1/2} for the torus. -/
+noncomputable def torusSingularValue (L₁ L₂ mass : ℝ) (m : ℕ) : ℝ :=
+  (torusEigenvalue L₁ L₂ mass m) ^ (-(1 : ℝ) / 2)
+
+/-- Torus singular values are bounded (all eigenvalues ≥ m² > 0). -/
+axiom torus_singular_values_bounded (L₁ L₂ mass : ℝ)
+    (hL₁ : 0 < L₁) (hL₂ : 0 < L₂) (hmass : 0 < mass) :
+    IsBoundedSeq (fun m => torusSingularValue L₁ L₂ mass m)
+
+/-- Covariance CLM for the free scalar on T². -/
+def torusGFF_T (L₁ L₂ mass : ℝ) [Fact (0 < L₁)] [Fact (0 < L₂)]
+    (hL₁ : 0 < L₁) (hL₂ : 0 < L₂) (hmass : 0 < mass) :
+    TorusTestFun L₁ L₂ →L[ℝ] ell2' :=
+  spectralCLM (fun m => torusSingularValue L₁ L₂ mass m)
+    (torus_singular_values_bounded L₁ L₂ mass hL₁ hL₂ hmass)
+
+/-- QFTData for the free massive scalar on T² = S¹_{L₁} × S¹_{L₂}. -/
+def torusGFF (L₁ L₂ mass : ℝ) [Fact (0 < L₁)] [Fact (0 < L₂)]
+    (hL₁ : 0 < L₁) (hL₂ : 0 < L₂) (hmass : 0 < mass) :
+    QFTData (torusSpacetime L₁ L₂) (freeScalar mass).toTheoryData where
+  measure := sorry  -- ProbabilityMeasure from GaussianField.measure (torusGFF_T ...)
+  weight := fun _ => 1
+  weight_integrable := sorry
+  genFunℂ := sorry
 
 /-! ## Euclidean GFF
 

@@ -11,6 +11,7 @@ is the main goal of the GFF project.
 ## Main definitions
 
 - `cylinderGFF_OS` — OSTheory for free scalar on S¹_L × ℝ
+- `torusGFF_QFT` — QFTData for free scalar on T² (no OSTheory: see below)
 - `euclideanGFF_OS` — OSTheory for free scalar on ℝ^d
 -/
 
@@ -39,6 +40,42 @@ def cylinderGFF_OS (L mass : ℝ) [Fact (0 < L)] (hL : 0 < L) (hmass : 0 < mass)
   os3 := sorry  -- Reflection positivity: from heat kernel
   os4_clustering := sorry  -- Clustering: Gaussian correlations decay
   os4_ergodicity := sorry  -- Ergodicity: from mixing
+
+/-! ## Torus GFF — QFT without full OS axioms
+
+The GFF on T² = S¹_{L₁} × S¹_{L₂} is a well-defined QFT (probability measure
++ generating functional), but does NOT satisfy all OS axioms in a meaningful way:
+
+- OS0 (Analyticity): **holds** — charFun is entire
+- OS1 (Regularity): **holds** — Gaussian bound
+- OS2 (Invariance): **holds** — torus translation invariance
+- OS3 (Reflection positivity): **vacuous/problematic** — no infinite time direction,
+  so "positive time" submodule is the whole space or empty. Formally satisfiable
+  but physically meaningless.
+- OS4 (Clustering): **vacuously true** — TransVec = ℝ × ℝ but torus translations
+  are periodic, so cocompact filter is ⊥ on the compact quotient
+- OS4 (Ergodicity): **vacuously true** — same reason
+
+We provide the individual axiom statements that do hold, but do NOT construct
+an `OSTheory` instance since it would be misleading. -/
+
+/-- OS0 for torus GFF: the characteristic functional is analytic. -/
+theorem torusGFF_os0 (L₁ L₂ mass : ℝ) [Fact (0 < L₁)] [Fact (0 < L₂)]
+    (hL₁ : 0 < L₁) (hL₂ : 0 < L₂) (hmass : 0 < mass) :
+    OS0_Analyticity (torusSpacetime L₁ L₂) (torusGFF L₁ L₂ mass hL₁ hL₂ hmass) :=
+  sorry
+
+/-- OS1 for torus GFF: exponential regularity bound. -/
+theorem torusGFF_os1 (L₁ L₂ mass : ℝ) [Fact (0 < L₁)] [Fact (0 < L₂)]
+    (hL₁ : 0 < L₁) (hL₂ : 0 < L₂) (hmass : 0 < mass) :
+    OS1_Regularity (torusSpacetime L₁ L₂) (torusGFF L₁ L₂ mass hL₁ hL₂ hmass) :=
+  sorry
+
+/-- OS2 for torus GFF: torus translation invariance. -/
+theorem torusGFF_os2 (L₁ L₂ mass : ℝ) [Fact (0 < L₁)] [Fact (0 < L₂)]
+    (hL₁ : 0 < L₁) (hL₂ : 0 < L₂) (hmass : 0 < mass) :
+    OS2_Invariance (torusSpacetime L₁ L₂) (torusGFF L₁ L₂ mass hL₁ hL₂ hmass) :=
+  sorry
 
 /-! ## Euclidean GFF satisfies OS axioms -/
 

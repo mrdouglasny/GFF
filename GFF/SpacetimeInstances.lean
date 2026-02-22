@@ -11,6 +11,7 @@ with concrete constructions from gaussian-field.
 ## Main definitions
 
 - `cylinderSpacetime L` — cylinder S¹_L × ℝ using NuclearTensorProduct
+- `torusSpacetime L₁ L₂` — flat torus T² = S¹_{L₁} × S¹_{L₂}
 - `euclideanSpacetime d` — flat ℝ^d using SchwartzMap
 -/
 
@@ -63,6 +64,56 @@ def cylinderSpacetime (L : ℝ) [Fact (0 < L)] : SpacetimeData where
   instNACG_TV := inferInstance
   translateEmbed := sorry
   timeReflection := sorry  -- θ ↦ -θ
+  positiveTimeSubmodule := sorry
+  timeShift := sorry
+
+/-! ## Torus spacetime T² = S¹_{L₁} × S¹_{L₂}
+
+The flat 2-torus with periods L₁, L₂. Test functions are the nuclear tensor
+product `NuclearTensorProduct (SmoothMap_Circle L₁ ℝ) (SmoothMap_Circle L₂ ℝ)`.
+
+Since T² is compact, the translation group is compact and `Filter.cocompact`
+is `⊥`, so OS4 clustering is vacuously true. However, there is no distinguished
+time direction with infinite extent, so OS3 (reflection positivity) and OS4
+(ergodicity) do not have their usual physical content. The GFF on T² is still
+a well-defined Gaussian measure — it just doesn't reconstruct a Hilbert space
+QFT via Osterwalder-Schrader. -/
+
+/-- Abbreviation for the torus test function space. -/
+abbrev TorusTestFun (L₁ L₂ : ℝ) [Fact (0 < L₁)] [Fact (0 < L₂)] :=
+  NuclearTensorProduct (SmoothMap_Circle L₁ ℝ) (SmoothMap_Circle L₂ ℝ)
+
+/-- Torus spacetime: T² = S¹_{L₁} × S¹_{L₂}.
+
+Test functions are the nuclear tensor product of smooth periodic functions
+on each circle factor. The spacetime is compact, so clustering is vacuous
+and there is no infinite time direction for reflection positivity. -/
+def torusSpacetime (L₁ L₂ : ℝ) [Fact (0 < L₁)] [Fact (0 < L₂)] : SpacetimeData where
+  TestFun := TorusTestFun L₁ L₂
+  TestFunℂ := TorusTestFun L₁ L₂  -- real space serving as complex placeholder
+  instACG_TF := inferInstance
+  instMod_TF := inferInstance
+  instTS_TF := inferInstance
+  instACG_TFℂ := inferInstance
+  instMod_TFℂ := sorry  -- Module ℂ structure (future: complexification)
+  instTS_TFℂ := inferInstance
+  toComplex := sorry  -- real-to-complex embedding (future)
+  FieldConfig := Configuration (TorusTestFun L₁ L₂)
+  instMS_FC := instMeasurableSpaceConfiguration
+  instTS_FC := inferInstance
+  eval := fun ω f => ω f
+  eval_measurable := sorry
+  -- Symmetry: torus translations (θ₁, θ₂) ↦ (θ₁ + a₁, θ₂ + a₂)
+  SymGroup := sorry
+  instGrp_SG := sorry
+  symAction := sorry
+  -- Translation group is compact (ℝ/L₁ℤ × ℝ/L₂ℤ), but we use ℝ² and
+  -- rely on cocompact being ⊥ for the compact quotient in OS4
+  TransVec := ℝ × ℝ
+  instNACG_TV := inferInstance
+  translateEmbed := sorry
+  -- "Time" reflection: θ₁ ↦ -θ₁ (formal; no infinite time direction)
+  timeReflection := sorry
   positiveTimeSubmodule := sorry
   timeShift := sorry
 
