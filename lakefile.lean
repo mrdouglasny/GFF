@@ -7,10 +7,10 @@ package «GFF» where
   ]
 
 require «GaussianField» from git
-  "https://github.com/mrdouglasny/gaussian-field.git"
+  "https://github.com/mrdouglasny/gaussian-field.git" @ "main"
 
 require «QFTFramework» from git
-  "https://github.com/mrdouglasny/QFTFramework.git"
+  "https://github.com/mrdouglasny/QFTFramework.git" @ "main"
 
 @[default_target]
 lean_lib «GFF» where

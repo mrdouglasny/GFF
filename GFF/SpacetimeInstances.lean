@@ -16,6 +16,8 @@ with concrete constructions from gaussian-field.
 
 import QFTFramework
 import GaussianField
+import SmoothCircle
+import HeatKernel
 
 open GaussianField
 
