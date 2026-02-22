@@ -63,6 +63,7 @@ def cylinderSpacetime (L : ℝ) [Fact (0 < L)] : SpacetimeData where
   TransVec := ℝ × ℝ  -- (θ shift, x shift)
   instNACG_TV := inferInstance
   translateEmbed := sorry
+  translate := sorry  -- f(θ, x) ↦ f(θ - a₁, x - a₂)
   timeReflection := sorry  -- θ ↦ -θ
   positiveTimeSubmodule := sorry
   timeShift := sorry
@@ -112,6 +113,7 @@ def torusSpacetime (L₁ L₂ : ℝ) [Fact (0 < L₁)] [Fact (0 < L₂)] : Space
   TransVec := ℝ × ℝ
   instNACG_TV := inferInstance
   translateEmbed := sorry
+  translate := sorry  -- f(θ₁, θ₂) ↦ f(θ₁ - a₁, θ₂ - a₂) (periodic)
   -- "Time" reflection: θ₁ ↦ -θ₁ (formal; no infinite time direction)
   timeReflection := sorry
   positiveTimeSubmodule := sorry
@@ -148,6 +150,7 @@ def euclideanSpacetime (d : ℕ) : SpacetimeData where
   TransVec := EuclideanSpace ℝ (Fin d)
   instNACG_TV := inferInstance
   translateEmbed := sorry
+  translate := sorry  -- f(x) ↦ f(x - a)
   timeReflection := sorry  -- (x₀, x⃗) ↦ (-x₀, x⃗)
   positiveTimeSubmodule := sorry
   timeShift := sorry
