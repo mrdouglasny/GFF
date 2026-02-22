@@ -11,8 +11,10 @@ is the main goal of the GFF project.
 ## Main definitions
 
 - `cylinderGFF_OS` — OSTheory for free scalar on S¹_L × ℝ
+- `cylinderGFF_OSR` — OSReconstructible (adds OS1' Schwinger growth)
 - `torusGFF_QFT` — QFTData for free scalar on T² (no OSTheory: see below)
 - `euclideanGFF_OS` — OSTheory for free scalar on ℝ^d
+- `euclideanGFF_OSR` — OSReconstructible for ℝ^d
 -/
 
 import GFF.GFFConstruction
@@ -40,6 +42,18 @@ def cylinderGFF_OS (L mass : ℝ) [Fact (0 < L)] (hL : 0 < L) (hmass : 0 < mass)
   os3 := sorry  -- Reflection positivity: from heat kernel
   os4_clustering := sorry  -- Clustering: Gaussian correlations decay
   os4_ergodicity := sorry  -- Ergodicity: from mixing
+
+/-- The cylinder GFF satisfies the Schwinger function growth bound (OS1')
+needed for Wightman reconstruction.
+
+For the GFF, Wick's theorem gives S_n = 0 for odd n and
+S_{2k}(f₁,...,f_{2k}) = ∑_{pairings} ∏ C(fᵢ,fⱼ). The bound
+|S_n| ≤ (n-1)‼ · ∏ ‖Tfᵢ‖ ≤ n!^{1/2} · ∏ ‖Tfᵢ‖
+gives γ = 1/2 in the OS1' factorial growth condition. -/
+def cylinderGFF_OSR (L mass : ℝ) [Fact (0 < L)] (hL : 0 < L) (hmass : 0 < mass) :
+    OSReconstructible (cylinderSpacetime L) (freeScalar mass).toTheoryData where
+  toOSTheory := cylinderGFF_OS L mass hL hmass
+  os1' := sorry  -- Wick's theorem → factorial growth with γ = 1/2
 
 /-! ## Torus GFF — QFT without full OS axioms
 
@@ -93,5 +107,11 @@ def euclideanGFF_OS (d : ℕ) (mass : ℝ) (hmass : 0 < mass) :
   os3 := sorry
   os4_clustering := sorry
   os4_ergodicity := sorry
+
+/-- The Euclidean GFF on ℝ^d satisfies OS1' with γ = 1/2 (Wick's theorem). -/
+def euclideanGFF_OSR (d : ℕ) (mass : ℝ) (hmass : 0 < mass) :
+    OSReconstructible (euclideanSpacetime d) (freeScalar mass).toTheoryData where
+  toOSTheory := euclideanGFF_OS d mass hmass
+  os1' := sorry  -- Wick's theorem → factorial growth with γ = 1/2
 
 end
