@@ -5,7 +5,7 @@ most fundamental objects in quantum field theory and probability. The
 project is split across three repositories, each handling a different
 layer of abstraction.
 
-## gaussian-field — the functional analysis
+## [gaussian-field](https://github.com/mrdouglasny/gaussian-field) — the functional analysis
 
 The bottom layer. It builds the mathematical machinery needed to
 construct Gaussian probability measures on infinite-dimensional spaces.
@@ -26,7 +26,7 @@ and for smooth periodic functions on circles (via Fourier series), and
 provides a tensor product construction so these can be combined into
 product spaces like cylinders and tori.
 
-## QFTFramework — the abstract axioms
+## [QFTFramework](https://github.com/mrdouglasny/QFTFramework) — the abstract axioms
 
 The middle layer. It defines what a quantum field theory is, without
 committing to any particular spacetime or field content.
@@ -46,7 +46,7 @@ The framework comes with built-in spacetimes for Euclidean space, tori,
 and lattices, plus standard theories like the free scalar, phi-four,
 and O(N) models.
 
-## GFF — the bridge
+## [GFF](https://github.com/mrdouglasny/GFF) — the bridge
 
 The top layer. It connects the other two by filling QFTFramework's
 abstract slots with gaussian-field's concrete constructions.
