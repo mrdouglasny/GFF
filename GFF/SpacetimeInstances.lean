@@ -63,7 +63,6 @@ def cylinderSpacetime (L : ℝ) [Fact (0 < L)] : SpacetimeData where
   timeReflection := sorry  -- θ ↦ -θ
   positiveTimeSubmodule := sorry
   timeShift := sorry
-  toComplex := sorry
 
 /-! ## Euclidean spacetime ℝ^d
 
